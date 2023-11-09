@@ -127,6 +127,9 @@ dependencies {
   implementation(Lib.Room.roomKtx)
   implementation(Lib.Room.roomPaging)
 
+  //Huhu Android app submodules defined here
+  implementation (project(":HuhuAPIClient"))
+
   /*Testing*/
   testImplementation(TestLib.JUNIT)
   testImplementation(TestLib.CORE_TEST)
