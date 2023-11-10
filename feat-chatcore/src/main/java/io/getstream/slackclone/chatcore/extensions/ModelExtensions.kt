@@ -27,6 +27,23 @@ fun UiLayerChannels.SlackChannel.toStreamChannel(): Channel {
   )
 }
 
+/**
+ *  Chat Designer
+ */
+fun UiLayerChannels.SlackSession.toStreamChannel(): Channel {
+  return Channel(
+    id = sessionId,
+    cid = "session:$sessionId", // Assuming 'session' is a valid type for your use case
+    type = "session",
+    name = sessionName,
+    image = imgUrl,
+    // Other properties can be set according to your requirements
+    createdAt = Date(createTime),
+    updatedAt = Date(lastModified),
+    memberCount = 2,
+  )
+}
+
 fun Channel.toSlackUIChannel(): UiLayerChannels.SlackChannel {
   return UiLayerChannels.SlackChannel(
     name = name,

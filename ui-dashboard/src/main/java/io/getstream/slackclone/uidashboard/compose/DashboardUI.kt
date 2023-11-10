@@ -208,7 +208,11 @@ private fun DashboardScaffold(
             composable(Screen.Home.route) {
               HomeScreenUI(
                 appBarIconClick,
-                onItemClick = onItemClick,
+                onItemClick = { session: UiLayerChannels.SlackSession ->
+                  // Implement what should happen when a session is clicked
+                  // For example, you might want to update some state or navigate to a detail screen
+                  // If you previously had logic for SlackChannel, you will need to adapt it for SlackSession
+                },
                 onCreateChannelRequest = {
                   composeNavigator.navigate(SlackScreen.CreateChannelsScreen.name)
                 }
