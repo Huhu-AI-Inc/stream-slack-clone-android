@@ -93,6 +93,12 @@ dependencies {
   api(Lib.Async.COROUTINES)
   api(Lib.Async.COROUTINES_ANDROID)
 
+  //Huhu Android app submodules defined here
+  implementation (project(":HuhuAPIClient"))
+  // Read Json
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2") // Use the latest version
+
+
   testImplementation(TestLib.JUNIT)
   testImplementation(TestLib.CORE_TEST)
   testImplementation(TestLib.ANDROID_JUNIT)

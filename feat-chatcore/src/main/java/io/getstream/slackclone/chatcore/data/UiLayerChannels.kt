@@ -11,4 +11,16 @@ interface UiLayerChannels {
     val isOneToOne: Boolean?,
     val pictureUrl: String?
   )
+
+  /**
+   * Chat Designer Session Item
+   */
+  data class SlackSession(
+    val sessionId: String,
+    val sessionName: String,
+    val createTime: Long,
+    val lastModified: Long,
+    val imgSize: String,
+    val imgUrl: String
+  )
 }
