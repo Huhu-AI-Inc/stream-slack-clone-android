@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import io.getstream.slackclone.chatcore.data.UiLayerChannels
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,16 +12,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.openapitools.client.apis.SessionsApi
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import org.openapitools.client.infrastructure.ClientException
 import org.openapitools.client.infrastructure.ServerException
 import org.openapitools.client.models.Session
 
-class SessionViewModel : ViewModel() {
+class SessionsViewModel : ViewModel() {
   // This will hold the list of session details
-  private val _sessionDetails = mutableStateOf<List<UiLayerChannels.SlackSession>>(emptyList()) // Replace 'Any' with your session detail type
-  val sessionDetails: State<List<UiLayerChannels.SlackSession>> = _sessionDetails
+  private val _sessionDetails = mutableStateOf<List<UiLayerChannels.ChatDesignerSession>>(emptyList()) // Replace 'Any' with your session detail type
+  val sessionDetails: State<List<UiLayerChannels.ChatDesignerSession>> = _sessionDetails
 
   // This will hold the userId from the session object
   private val _userId = mutableStateOf<String?>(null)
@@ -46,10 +43,10 @@ class SessionViewModel : ViewModel() {
         // Assuming getSessions is a suspend function that returns a Session object
         val sessionObject : Session = apiInstance.getSessions(accessToken = accessToken)
         // Assuming sessionObject.sessions is a List of Maps, and you need to convert it to a List of SlackSession
-        val sessionItems: List<UiLayerChannels.SlackSession> = sessionObject.sessions.map { session ->
+        val sessionItems: List<UiLayerChannels.ChatDesignerSession> = sessionObject.sessions.map { session ->
           // Cast the item to a Map and extract the properties
           val sessionMap = session as Map<String, Any>
-          UiLayerChannels.SlackSession(
+          UiLayerChannels.ChatDesignerSession(
             sessionId = sessionMap["session_id"] as String,
             sessionName = sessionMap["session_name"] as String,
             createTime = (sessionMap["create_time"] as Number).toLong(),

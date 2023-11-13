@@ -22,14 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import io.getstream.chat.android.client.models.Channel
 import io.getstream.slackclone.chatcore.data.ExpandCollapseModel
 import io.getstream.slackclone.chatcore.data.UiLayerChannels
 import io.getstream.slackclone.chatcore.extensions.toStreamChannel
 import io.getstream.slackclone.chatcore.views.SlackChannelItem
 import io.getstream.slackclone.commonui.theme.SlackCloneColorProvider
 import io.getstream.slackclone.commonui.theme.SlackCloneTypography
-import org.openapitools.client.models.Session
 
 @Composable
 fun SKExpandCollapseColumn(
@@ -90,9 +88,9 @@ private fun ColumnScope.ChannelsList(
 @Composable
 fun SKExpandCollapseSessionColumn(
   expandCollapseModel: ExpandCollapseModel,
-  onItemClick: (UiLayerChannels.SlackSession) -> Unit = {}, // Now takes a Session instead of SlackChannel
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit = {}, // Now takes a Session instead of SlackChannel
   onExpandCollapse: (isChecked: Boolean) -> Unit,
-  sessions: List<UiLayerChannels.SlackSession>, // List of sessions instead of channels
+  sessions: List<UiLayerChannels.ChatDesignerSession>, // List of sessions instead of channels
   onClickAdd: () -> Unit
 ) {
   Column(
@@ -126,8 +124,8 @@ fun SKExpandCollapseSessionColumn(
 @Composable
 private fun ColumnScope.SessionsList(
   expandCollapseModel: ExpandCollapseModel,
-  onItemClick: (UiLayerChannels.SlackSession) -> Unit = {}, // Now takes a Session
-  sessions: List<UiLayerChannels.SlackSession> // List of sessions
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit = {}, // Now takes a Session
+  sessions: List<UiLayerChannels.ChatDesignerSession> // List of sessions
 ) {
   AnimatedVisibility(visible = expandCollapseModel.isOpen) {
     Column {
