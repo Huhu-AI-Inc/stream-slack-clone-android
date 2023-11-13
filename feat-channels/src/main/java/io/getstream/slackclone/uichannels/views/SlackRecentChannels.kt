@@ -13,9 +13,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.getstream.slackclone.chatcore.data.ExpandCollapseModel
 import io.getstream.slackclone.chatcore.data.UiLayerChannels
 import io.getstream.slackclone.uichannels.R
-import io.getstream.slackclone.uichannels.SessionViewModel
+import io.getstream.slackclone.uichannels.SessionsViewModel
 import io.getstream.slackclone.uichannels.SlackChannelVM
-import org.openapitools.client.models.Session
 
 @Composable
 fun SlackRecentChannels(
@@ -47,8 +46,8 @@ fun SlackRecentChannels(
 
 @Composable
 fun SlackRecentSessions(
-  onItemClick: (UiLayerChannels.SlackSession) -> Unit = {},
-  sessionVM: SessionViewModel = viewModel(),
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit = {},
+  sessionVM: SessionsViewModel = viewModel(),
   onClickAdd: () -> Unit
 ) {
   val recent = stringResource(R.string.Recent) // Replace with actual string resource ID for "Recent"

@@ -30,7 +30,7 @@ fun UiLayerChannels.SlackChannel.toStreamChannel(): Channel {
 /**
  *  Chat Designer
  */
-fun UiLayerChannels.SlackSession.toStreamChannel(): Channel {
+fun UiLayerChannels.ChatDesignerSession.toStreamChannel(): Channel {
   return Channel(
     id = sessionId,
     cid = "session:$sessionId", // Assuming 'session' is a valid type for your use case

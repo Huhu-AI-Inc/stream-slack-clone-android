@@ -15,7 +15,7 @@ interface UiLayerChannels {
   /**
    * Chat Designer Session Item
    */
-  data class SlackSession(
+  data class ChatDesignerSession(
     val sessionId: String,
     val sessionName: String,
     val createTime: Long,
