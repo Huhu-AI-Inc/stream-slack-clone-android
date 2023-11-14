@@ -32,9 +32,9 @@ class DashboardVM @Inject constructor(
   private val channelMapper: UiModelMapper<DomainLayerChannels.SlackChannel, UiLayerChannels.SlackChannel>
 ) : ViewModel() {
 
+  val selectedChatSession = MutableStateFlow<UiLayerChannels.ChatDesignerSession?>(null)
   val selectedChatChannel = MutableStateFlow<UiLayerChannels.SlackChannel?>(null)
   val isChatViewClosed = MutableStateFlow(true)
-
   init {
     observeChannelCreated()
     preloadUsers()

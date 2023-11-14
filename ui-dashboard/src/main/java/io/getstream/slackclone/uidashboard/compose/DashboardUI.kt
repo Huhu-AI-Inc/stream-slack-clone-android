@@ -63,6 +63,7 @@ import io.getstream.slackclone.commonui.theme.SlackCloneTheme
 import io.getstream.slackclone.commonui.theme.SlackCloneTypography
 import io.getstream.slackclone.navigator.ComposeNavigator
 import io.getstream.slackclone.navigator.SlackScreen
+import io.getstream.slackclone.uichat.chatthread.ChatDesignerChatVM
 import io.getstream.slackclone.uichat.chatthread.ChatScreenUI
 import io.getstream.slackclone.uichat.chatthread.ChatScreenVM
 import io.getstream.slackclone.uidashboard.home.DirectMessagesUI
@@ -91,10 +92,10 @@ private fun DashboardScreenRegular(
   dashboardNavController: NavHostController,
   composeNavigator: ComposeNavigator,
   dashboardVM: DashboardVM,
-  viewModel: ChatScreenVM = hiltViewModel()
+  viewModel: ChatDesignerChatVM = hiltViewModel() // change to ours
 ) {
   val keyboardController = LocalSoftwareKeyboardController.current
-  val lastChannel by dashboardVM.selectedChatChannel.collectAsState()
+  val lastChannel by dashboardVM.selectedChatSession.collectAsState() // change to ours
 
   var isLeftNavOpen by remember { mutableStateOf(false) }
   val isChatViewClosed by dashboardVM.isChatViewClosed.collectAsState()
@@ -111,7 +112,7 @@ private fun DashboardScreenRegular(
 
   SideEffect {
     lastChannel?.let {
-      viewModel.createChannel(it)
+//      viewModel.createChannel(it)
     }
     if (isChatViewClosed) {
       keyboardController?.hide()
@@ -154,8 +155,9 @@ private fun DashboardScreenRegular(
       modifier = mainViewModifier,
       appBarIconClick = { isLeftNavOpen = isLeftNavOpen.not() },
       onItemClick = {
-        dashboardVM.selectedChatChannel.value = it
+//        dashboardVM.selectedChatChannel.value = it
         dashboardVM.isChatViewClosed.value = false
+        dashboardVM.selectedChatSession.value = it
       },
       composeNavigator = composeNavigator
     )
@@ -163,7 +165,7 @@ private fun DashboardScreenRegular(
 }
 
 private fun checkChatViewClosed(
-  lastChannel: UiLayerChannels.SlackChannel?,
+  lastChannel: UiLayerChannels.ChatDesignerSession?,// change to ours
   isChatViewClosed: Boolean
 ) = lastChannel == null || isChatViewClosed
 
@@ -175,7 +177,7 @@ private fun DashboardScaffold(
   dashboardNavController: NavHostController,
   modifier: Modifier,
   appBarIconClick: () -> Unit,
-  onItemClick: (UiLayerChannels.SlackChannel) -> Unit,
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit,
   composeNavigator: ComposeNavigator,
 ) {
   Box(modifier) {
@@ -208,19 +210,19 @@ private fun DashboardScaffold(
             composable(Screen.Home.route) {
               HomeScreenUI( // modified to sessions
                 appBarIconClick,
-                onItemClick = { session: UiLayerChannels.ChatDesignerSession ->
+                onItemClick = onItemClick,//{ session: UiLayerChannels.ChatDesignerSession ->
                   // Implement what should happen when a session is clicked
                   // For example, you might want to update some state or navigate to a detail screen
                   // If you previously had logic for SlackChannel, you will need to adapt it for SlackSession
-                },
+//                },
                 onCreateChannelRequest = {
                   composeNavigator.navigate(SlackScreen.CreateChannelsScreen.name)
                 }
               )
             }
-            composable(Screen.DMs.route) {
-              DirectMessagesUI(onItemClick = onItemClick)
-            }
+//            composable(Screen.DMs.route) {
+//              DirectMessagesUI(onItemClick = onItemClick)
+//            }
             composable(Screen.Mentions.route) {
               MentionsReactionsUI()
             }
@@ -243,7 +245,7 @@ private fun DashboardScaffold(
 @Composable
 private fun floatingDM(composeNavigator: ComposeNavigator) {
   FloatingActionButton(onClick = {
-    composeNavigator.navigate(SlackScreen.CreateNewChannel.name)
+    composeNavigator.navigate(SlackScreen.CreateNewDM.name)
   }, backgroundColor = Color.White) {
     Icon(
       imageVector = Icons.Default.Edit,
