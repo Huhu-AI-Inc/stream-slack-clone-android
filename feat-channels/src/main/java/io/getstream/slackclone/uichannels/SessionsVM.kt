@@ -43,18 +43,7 @@ class SessionsViewModel : ViewModel() {
         // Assuming getSessions is a suspend function that returns a Session object
         val sessionObject : Session = apiInstance.getSessions(accessToken = accessToken)
         // Assuming sessionObject.sessions is a List of Maps, and you need to convert it to a List of SlackSession
-        val sessionItems: List<UiLayerChannels.ChatDesignerSession> = sessionObject.sessions.map { session ->
-          // Cast the item to a Map and extract the properties
-          val sessionMap = session as Map<String, Any>
-          UiLayerChannels.ChatDesignerSession(
-            sessionId = sessionMap["session_id"] as String,
-            sessionName = sessionMap["session_name"] as String,
-            createTime = (sessionMap["create_time"] as Number).toLong(),
-            lastModified = (sessionMap["last_modified"] as Number).toLong(),
-            imgSize = sessionMap["img_size"] as String,
-            imgUrl = sessionMap["img_url"] as String
-          )
-        }
+        val sessionItems: List<UiLayerChannels.ChatDesignerSession> = transformToChatDesignerSessions(sessionObject)
 
         // Now assign the mapped list to the state variable
         _sessionDetails.value = sessionItems
@@ -80,4 +69,20 @@ class SessionsViewModel : ViewModel() {
       }
     }
   }
+
+  fun transformToChatDesignerSessions(sessionObject: Session): List<UiLayerChannels.ChatDesignerSession> {
+    return sessionObject.sessions.map { session ->
+      // Cast the item to a Map and extract the properties
+      val sessionMap = session as Map<String, Any>
+      UiLayerChannels.ChatDesignerSession(
+        sessionId = sessionMap["session_id"] as String,
+        sessionName = sessionMap["session_name"] as String,
+        createTime = (sessionMap["create_time"] as Number).toLong(),
+        lastModified = (sessionMap["last_modified"] as Number).toLong(),
+        imgSize = sessionMap["img_size"] as String,
+        imgUrl = sessionMap["img_url"] as String
+      )
+    }
+  }
+
 }

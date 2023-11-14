@@ -37,6 +37,7 @@ import io.getstream.slackclone.commonui.keyboard.keyboardAsState
 import io.getstream.slackclone.commonui.theme.SlackCloneColorProvider
 import io.getstream.slackclone.commonui.theme.SlackCloneTypography
 import io.getstream.slackclone.uichat.chatthread.BoxState
+import io.getstream.slackclone.uichat.chatthread.ChatDesignerChatVM
 import io.getstream.slackclone.uichat.chatthread.ChatScreenVM
 
 @Composable
@@ -100,7 +101,11 @@ fun ChatOptions(viewModel: ChatScreenVM, slackChannel: Channel, modifier: Modifi
       }
     }
     Box(Modifier.padding(end = 8.dp)) {
-      SendMessageButton(viewModel = viewModel, message = search, slackChannel = slackChannel)
+      CreateChatDesignerChatButton(
+        viewModel = ChatDesignerChatVM(),
+        message = search,
+        slackChannel = slackChannel
+      )
     }
   }
 }
@@ -178,6 +183,26 @@ private fun SendMessageButton(
   IconButton(
     onClick = {
       viewModel.sendMessage(slackChannel.cid, message)
+    }, enabled = message.isNotEmpty(), modifier = modifier
+  ) {
+    Icon(
+      Icons.Default.Send,
+      contentDescription = null,
+      tint = if (message.isEmpty()) SlackCloneColorProvider.colors.sendButtonDisabled else SlackCloneColorProvider.colors.sendButtonEnabled
+    )
+  }
+}
+
+@Composable
+private fun CreateChatDesignerChatButton(
+  modifier: Modifier = Modifier,
+  viewModel: ChatDesignerChatVM,
+  message: String,
+  slackChannel: Channel
+) {
+  IconButton(
+    onClick = {
+      viewModel.createSession(message)
     }, enabled = message.isNotEmpty(), modifier = modifier
   ) {
     Icon(
