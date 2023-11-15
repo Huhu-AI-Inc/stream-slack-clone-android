@@ -1,10 +1,12 @@
 package io.getstream.slackclone.uichat.chatthread
 
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.openapitools.client.apis.ChatApi
 import org.openapitools.client.apis.SessionApi
 import org.openapitools.client.infrastructure.ClientException
@@ -53,8 +55,56 @@ class ChatDesignerChatVM : ViewModel(){
     }
   }
 
-  fun createChat() {
+  fun getChatHistory() {
+    try {
+      val result: ChatHistory = apiInstanceChat.getChat(sessionId = sessionId, accessToken = accessToken)
+      val chatContents = parseChatHistory(result.chatHistory)
 
+
+    } catch (e: ClientException) {
+      println("4xx response calling SessionApi#createSession")
+      e.printStackTrace()
+    } catch (e: ServerException) {
+      println("5xx response calling SessionApi#createSession")
+      e.printStackTrace()
+    }
   }
+
+  fun parseChatHistory(chatHistory: List<Any>?): List<ChatContent> {
+    return chatHistory?.mapNotNull { item ->
+      try {
+        // Assuming `item` can be cast to a Map representing the JSON structure
+        val itemMap = item as? Map<String, Any> ?: return@mapNotNull null
+
+        // Extracting fields from itemMap to create a ChatMessage
+        val role = itemMap["role"] as? String ?: return@mapNotNull null
+//                val content = Gson().toJsonTree(itemMap["content"])
+        val text = itemMap["content"] as? String
+        val images = parseImages(itemMap["content"] as? List<Map<String, Any>>)
+        val requestTime = itemMap["request_time"] as? Long ?
+        val requestId = itemMap["request_id"] as? String
+        val isFirstPage = itemMap["is_first_page"] as? Boolean
+        val isRegenerable = itemMap["is_regenerable"] as? Int
+        val numOfImages = itemMap["num_of_images"] as? Int
+
+        ChatContent(role, null, text, images, requestTime, requestId, isFirstPage, isRegenerable, numOfImages)
+      } catch (e: Exception) {
+        null // or handle the exception as needed
+      }
+    } ?: emptyList()
+  }
+
+  fun parseImages(imagesList: List<Map<String, Any>>?): List<ImageContent> {
+    return imagesList?.mapNotNull { imageMap ->
+      val imageId = imageMap["image_id"] as? String
+      val imageUrl = imageMap["image_url"] as? String
+      if (imageId != null && imageUrl != null) {
+        ImageContent(imageId, imageUrl)
+      } else {
+        null
+      }
+    } ?: emptyList()
+  }
+
 
 }

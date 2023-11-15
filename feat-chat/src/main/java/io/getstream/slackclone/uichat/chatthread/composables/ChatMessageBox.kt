@@ -174,7 +174,7 @@ fun CollapseExpandButton(viewModel: ChatScreenVM) {
 }
 
 @Composable
-private fun SendMessageButton(
+private fun SendMessageButton( // not used if keyboard is closed
   modifier: Modifier = Modifier,
   viewModel: ChatScreenVM,
   message: String,

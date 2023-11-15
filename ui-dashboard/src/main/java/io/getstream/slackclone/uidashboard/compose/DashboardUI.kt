@@ -157,7 +157,7 @@ private fun DashboardScreenRegular(
       onItemClick = {
 //        dashboardVM.selectedChatChannel.value = it
         dashboardVM.isChatViewClosed.value = false
-        dashboardVM.selectedChatSession.value = it
+        dashboardVM.selectedChatSession.value = it  // maybe add getHistory?
       },
       composeNavigator = composeNavigator
     )

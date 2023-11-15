@@ -95,6 +95,8 @@ dependencies {
   api(Lib.Async.COROUTINES)
   api(Lib.Async.COROUTINES_ANDROID)
 
+  implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
+
   testImplementation(TestLib.JUNIT)
   testImplementation(TestLib.CORE_TEST)
   testImplementation(TestLib.ANDROID_JUNIT)
