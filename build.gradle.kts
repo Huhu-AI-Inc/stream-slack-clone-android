@@ -11,7 +11,6 @@ buildscript {
     classpath(BuildPlugins.KOTLIN_GRADLE_PLUGIN)
     classpath(kotlin("serialization", version = Lib.Kotlin.KOTLIN_VERSION))
     classpath(BuildPlugins.SPOTLESS)
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
   }
 }
 

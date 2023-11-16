@@ -18,4 +18,3 @@ include(":benchmark")
 
 include(":HuhuAPIClient")
 project(":HuhuAPIClient").projectDir = file("../huhu-api-generator-android/HuhuAPIClient")
-include(":Network")

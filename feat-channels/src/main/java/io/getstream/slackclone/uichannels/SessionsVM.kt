@@ -1,6 +1,5 @@
 package io.getstream.slackclone.uichannels
 
-import ai.huhu.chatdesigner.repository.SessionRepository
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -36,13 +35,13 @@ class SessionsViewModel : ViewModel() {
 
   // Call this function to fetch the session object which contains the userId and a list of session details
   fun fetchSessions() {
-//    val apiInstance = SessionsApi()
+    val apiInstance = SessionsApi()
     val accessToken: kotlin.String = "eyJraWQiOiJJd0dXTzdaRU5GVEZYS3ZLUUJIRUkyN3Z6d1JGOGNMeXFtVnR3dzVTZ0FRPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI4OTQ0MzIzNS04OTliLTQ5NDAtYTM2Ny03OWIwZjk1Mjg2ZTciLCJjb2duaXRvOmdyb3VwcyI6WyJ1cy13ZXN0LTJfZHgwdEhkYmF2X0dvb2dsZSJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9keDB0SGRiYXYiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiIzYW5ldTdlMm9tbXRpYzFuMGIyaWJhN2hsdSIsIm9yaWdpbl9qdGkiOiI0NzliMTY4OS01ODA5LTRlYmEtOGQwMC02N2UzZGM5MGExY2UiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIG9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXV0aF90aW1lIjoxNjk5NTU1NDYzLCJleHAiOjE2OTk1ODQwNzYsImlhdCI6MTY5OTU4MDQ3NiwianRpIjoiOTNhMmIwMDAtMTA0NS00OThjLTk5MDYtMmIxZjIyZmE4OWIwIiwidXNlcm5hbWUiOiJnb29nbGVfMTE0MjM2NDY3MDg4NzkxNzAyODU3In0.nSsXnHf7joP02Qz2neQ2Dejtqsl-AfgKk1zLDyNFsp5Y-OoGgRsufAu70JaZRuAlXw5Pg5GEAzhbFxOmsxJE_1klvxbaN0jkHdKCmH_zyK3u15K_5QGXA2f6oeYFZ5s4ul_PojPxjKsWvWH9TISDRcEQEQiPFh81jvSNMa4aRHjNABfJhePkEQO6sZ2gP0vxkw83VQEfrEopvSJR8DOLjNsZ7ip2jHcX72M8XKxvvGqdpp3sD1J4nDZxGa6pKh6xYHjgWXNAvl8_75BzSJV-iiblJV15-LwU1ds8a-m_EWZzBFg5FAurYupZ9EEPgAp-tKHi-qD_48gR-MS8n-bc9g"
 
     CoroutineScope(Dispatchers.IO).launch {
       try {
         // Assuming getSessions is a suspend function that returns a Session object
-        val sessionObject = SessionRepository().getSessions(accessToken = accessToken).getOrThrow()
+        val sessionObject : Session = apiInstance.getSessions(accessToken = accessToken)
         // Assuming sessionObject.sessions is a List of Maps, and you need to convert it to a List of SlackSession
         val sessionItems: List<UiLayerChannels.ChatDesignerSession> = transformToChatDesignerSessions(sessionObject)
 
