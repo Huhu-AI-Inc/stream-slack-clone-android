@@ -55,11 +55,14 @@ class ChatDesignerChatVM : ViewModel(){
     }
   }
 
-  fun getChatHistory() {
+  /**
+   * getHistory to show message lists
+   */
+  fun getChatHistory() : List<ChatContent> {
     try {
       val result: ChatHistory = apiInstanceChat.getChat(sessionId = sessionId, accessToken = accessToken)
       val chatContents = parseChatHistory(result.chatHistory)
-
+      return chatContents
 
     } catch (e: ClientException) {
       println("4xx response calling SessionApi#createSession")
@@ -68,6 +71,7 @@ class ChatDesignerChatVM : ViewModel(){
       println("5xx response calling SessionApi#createSession")
       e.printStackTrace()
     }
+    return emptyList()
   }
 
   fun parseChatHistory(chatHistory: List<Any>?): List<ChatContent> {

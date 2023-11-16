@@ -39,30 +39,29 @@ class DashboardVM @Inject constructor(
     observeChannelCreated()
     preloadUsers()
   }
-
-  private fun observeChannelCreated() {
+  private fun observeChannelCreated() { // add created channels to the map (initially none)
     composeNavigator.observeResult<String>(
       NavigationKeys.navigateChannel,
     ).onStart {
       val message = savedStateHandle.get<String>(NavigationKeys.navigateChannel)
       message?.let {
         emit(it)
-      }
+      } // on start, message is null
     }.map {
-      useCaseGetChannel.perform(it)
+      useCaseGetChannel.perform(it) // get the domain layer from the message
     }.onEach { slackChannel ->
       navigateChatThreadForChannel(slackChannel)
     }
       .launchIn(viewModelScope)
 
     selectedChatChannel.onEach {
-      savedStateHandle.set(NavigationKeys.navigateChannel, it?.uuid)
+      savedStateHandle.set(NavigationKeys.navigateChannel, it?.uuid) // saving created channel to map
     }.launchIn(viewModelScope)
   }
 
   private fun navigateChatThreadForChannel(slackChannel: DomainLayerChannels.SlackChannel?) {
     slackChannel?.let {
-      selectedChatChannel.value = channelMapper.mapToPresentation(it)
+      selectedChatChannel.value = channelMapper.mapToPresentation(it) // map a domain layer channel into ui layer channel
       isChatViewClosed.value = false
     }
   }
