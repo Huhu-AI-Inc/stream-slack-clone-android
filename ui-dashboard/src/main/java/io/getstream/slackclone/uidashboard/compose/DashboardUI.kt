@@ -92,6 +92,7 @@ private fun DashboardScreenRegular(
   dashboardNavController: NavHostController,
   composeNavigator: ComposeNavigator,
   dashboardVM: DashboardVM,
+//  viewModel: ChatScreenVM = hiltViewModel()
   viewModel: ChatDesignerChatVM = hiltViewModel() // change to ours
 ) {
   val keyboardController = LocalSoftwareKeyboardController.current
@@ -157,7 +158,7 @@ private fun DashboardScreenRegular(
       onItemClick = {
 //        dashboardVM.selectedChatChannel.value = it
         dashboardVM.isChatViewClosed.value = false
-        dashboardVM.selectedChatSession.value = it  // maybe add getHistory?
+        dashboardVM.selectedChatSession.value = it  // maybe add getHistory
       },
       composeNavigator = composeNavigator
     )

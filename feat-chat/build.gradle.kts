@@ -70,6 +70,7 @@ dependencies {
   api(Lib.Android.COMPOSE_TOOLING)
   implementation(Lib.Android.LANDSCAPIST_GLIDE)
     implementation(project(mapOf("path" to ":HuhuAPIClient")))
+    implementation(project(mapOf("path" to ":feat-channels")))
     debugApi(Lib.Android.COMPOSE_DEBUG_TOOLING)
   api(Lib.Android.ACTIVITY_COMPOSE)
   api(Lib.Android.CONSTRAINT_LAYOUT_COMPOSE)

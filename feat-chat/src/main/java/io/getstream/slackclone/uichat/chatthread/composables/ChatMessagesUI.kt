@@ -39,7 +39,7 @@ fun ChatMessagesUI(
             modifier = Modifier
               .fillMaxSize()
               .background(ChatTheme.colors.appBackground),
-            messagesState = listViewModel.currentMessagesState,
+            messagesState = currentState,
             lazyListState = rememberMessageListState(parentMessageId = listViewModel.currentMessagesState.parentMessageId),
             itemContent = { messageListItemState ->
               when (messageListItemState) {

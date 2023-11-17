@@ -28,6 +28,7 @@ import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.compose.viewmodel.messages.MessageListViewModel
 import io.getstream.chat.android.compose.viewmodel.messages.MessagesViewModelFactory
 import io.getstream.slackclone.uichat.chatthread.BoxState
+import io.getstream.slackclone.uichat.chatthread.ChatDesignerChatVM
 import io.getstream.slackclone.uichat.chatthread.ChatScreenVM
 
 @OptIn(ExperimentalMotionApi::class)
@@ -62,7 +63,10 @@ fun ChatScreenContent(
   }
 
   listViewModel?.let {
-    val currentState = it.currentMessagesState
+//    val currentState = it.currentMessagesState
+    val cdc = ChatDesignerChatVM()
+    cdc.sessionId = slackChannel.id
+    val currentState by cdc.messagesState.collectAsState()
 
     MotionLayout(
       start = chatConstrains(),
