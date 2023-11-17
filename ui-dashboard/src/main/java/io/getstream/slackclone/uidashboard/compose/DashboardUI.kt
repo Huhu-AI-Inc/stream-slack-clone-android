@@ -206,9 +206,13 @@ private fun DashboardScaffold(
             startDestination = Screen.Home.route,
           ) {
             composable(Screen.Home.route) {
-              HomeScreenUI(
+              HomeScreenUI( // modified to sessions
                 appBarIconClick,
-                onItemClick = onItemClick,
+                onItemClick = { session: UiLayerChannels.ChatDesignerSession ->
+                  // Implement what should happen when a session is clicked
+                  // For example, you might want to update some state or navigate to a detail screen
+                  // If you previously had logic for SlackChannel, you will need to adapt it for SlackSession
+                },
                 onCreateChannelRequest = {
                   composeNavigator.navigate(SlackScreen.CreateChannelsScreen.name)
                 }
@@ -239,7 +243,7 @@ private fun DashboardScaffold(
 @Composable
 private fun floatingDM(composeNavigator: ComposeNavigator) {
   FloatingActionButton(onClick = {
-    composeNavigator.navigate(SlackScreen.CreateNewDM.name)
+    composeNavigator.navigate(SlackScreen.CreateNewChannel.name)
   }, backgroundColor = Color.White) {
     Icon(
       imageVector = Icons.Default.Edit,

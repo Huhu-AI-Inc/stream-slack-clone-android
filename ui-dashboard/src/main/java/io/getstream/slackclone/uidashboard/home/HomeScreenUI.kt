@@ -26,17 +26,13 @@ import io.getstream.slackclone.commonui.reusable.SlackListItem
 import io.getstream.slackclone.commonui.theme.SlackCloneColorProvider
 import io.getstream.slackclone.commonui.theme.SlackCloneSurface
 import io.getstream.slackclone.commonui.theme.SlackCloneTypography
-import io.getstream.slackclone.uichannels.views.SlackAllChannels
-import io.getstream.slackclone.uichannels.views.SlackConnections
-import io.getstream.slackclone.uichannels.views.SlackDirectMessages
-import io.getstream.slackclone.uichannels.views.SlackRecentChannels
-import io.getstream.slackclone.uichannels.views.SlackStarredChannels
+import io.getstream.slackclone.uichannels.views.SlackRecentSessions
 import io.getstream.slackclone.uidashboard.R
 
 @Composable
 fun HomeScreenUI(
   appBarIconClick: () -> Unit,
-  onItemClick: (UiLayerChannels.SlackChannel) -> Unit = {},
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit = {},
   onCreateChannelRequest: () -> Unit = {}
 ) {
   SlackCloneSurface(
@@ -49,31 +45,31 @@ fun HomeScreenUI(
         JumpToText()
         ThreadsTile()
         Divider(color = SlackCloneColorProvider.colors.lineColor, thickness = 0.5.dp)
-        SlackRecentChannels({
+        SlackRecentSessions({
           onItemClick(it)
         }, onClickAdd = {
           onCreateChannelRequest()
         })
-        SlackStarredChannels({
-          onItemClick(it)
-        }, onClickAdd = {
-          onCreateChannelRequest()
-        })
-        SlackDirectMessages({
-          onItemClick(it)
-        }, onClickAdd = {
-          onCreateChannelRequest()
-        })
-        SlackAllChannels({
-          onItemClick(it)
-        }, onClickAdd = {
-          onCreateChannelRequest()
-        })
-        SlackConnections({
-          onItemClick(it)
-        }, onClickAdd = {
-          onCreateChannelRequest()
-        })
+//        SlackStarredChannels({
+//          onItemClick(it)
+//        }, onClickAdd = {
+//          onCreateChannelRequest()
+//        })
+//        SlackDirectMessages({
+//          onItemClick(it)
+//        }, onClickAdd = {
+//          onCreateChannelRequest()
+//        })
+//        SlackAllChannels({
+//          onItemClick(it)
+//        }, onClickAdd = {
+//          onCreateChannelRequest()
+//        })
+//        SlackConnections({
+//          onItemClick(it)
+//        }, onClickAdd = {
+//          onCreateChannelRequest()
+//        })
       }
     }
   }

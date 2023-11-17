@@ -9,9 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import io.getstream.slackclone.chatcore.data.ExpandCollapseModel
 import io.getstream.slackclone.chatcore.data.UiLayerChannels
 import io.getstream.slackclone.uichannels.R
+import io.getstream.slackclone.uichannels.SessionsViewModel
 import io.getstream.slackclone.uichannels.SlackChannelVM
 
 @Composable
@@ -41,3 +43,37 @@ fun SlackRecentChannels(
     expandCollapseModel = expandCollapseModel.copy(isOpen = it)
   }, channels, onClickAdd)
 }
+
+@Composable
+fun SlackRecentSessions(
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit = {},
+  sessionVM: SessionsViewModel = viewModel(),
+  onClickAdd: () -> Unit
+) {
+  val recent = stringResource(R.string.Recent) // Replace with actual string resource ID for "Recent"
+  val sessions = sessionVM.sessionDetails.value  // Directly access the value
+  val userId = sessionVM.userId.value
+
+  // LaunchedEffect to fetch sessions when the composable first enters the composition
+  LaunchedEffect(key1 = Unit) {
+    sessionVM.fetchSessions()
+  }
+
+
+  var expandCollapseModel by remember {
+    mutableStateOf(
+      ExpandCollapseModel(
+        id = 1,
+        title = recent,
+        needsPlusButton = false,
+        isOpen = true
+      )
+    )
+  }
+
+  // This column will show a list of session items
+  SKExpandCollapseSessionColumn(expandCollapseModel, onItemClick, {
+    expandCollapseModel = expandCollapseModel.copy(isOpen = it)
+  }, sessions, onClickAdd)
+}
+

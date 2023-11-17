@@ -82,6 +82,63 @@ private fun ColumnScope.ChannelsList(
   }
 }
 
+/**
+ * Session modification
+ */
+@Composable
+fun SKExpandCollapseSessionColumn(
+  expandCollapseModel: ExpandCollapseModel,
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit = {}, // Now takes a Session instead of SlackChannel
+  onExpandCollapse: (isChecked: Boolean) -> Unit,
+  sessions: List<UiLayerChannels.ChatDesignerSession>, // List of sessions instead of channels
+  onClickAdd: () -> Unit
+) {
+  Column(
+    Modifier
+      .fillMaxWidth()
+      .padding(start = 16.dp, top = 4.dp, end = 8.dp, bottom = 4.dp)
+  ) {
+
+    Row(
+      Modifier
+        .fillMaxWidth()
+        .clickable {
+          onExpandCollapse(!expandCollapseModel.isOpen)
+        },
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Text(
+        text = expandCollapseModel.title,
+        style = SlackCloneTypography.subtitle2.copy(fontWeight = FontWeight.SemiBold),
+        modifier = Modifier.weight(1f)
+      )
+      AddButton(expandCollapseModel, onClickAdd)
+      ToggleButton(expandCollapseModel, onExpandCollapse)
+    }
+    SessionsList(expandCollapseModel, onItemClick, sessions)
+    Divider(color = SlackCloneColorProvider.colors.lineColor, thickness = 0.5.dp)
+  }
+}
+
+@Composable
+private fun ColumnScope.SessionsList(
+  expandCollapseModel: ExpandCollapseModel,
+  onItemClick: (UiLayerChannels.ChatDesignerSession) -> Unit = {}, // Now takes a Session
+  sessions: List<UiLayerChannels.ChatDesignerSession> // List of sessions
+) {
+  AnimatedVisibility(visible = expandCollapseModel.isOpen) {
+    Column {
+      repeat(sessions.size) {
+        val slackSession = sessions[it]
+        SlackChannelItem(slackSession.toStreamChannel()) {
+          onItemClick(slackSession)
+        }
+      }
+    }
+  }
+}
+
 @Composable
 private fun AddButton(
   expandCollapseModel: ExpandCollapseModel,
