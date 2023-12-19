@@ -63,10 +63,10 @@ fun ChatScreenContent(
   }
 
   listViewModel?.let {
-//    val currentState = it.currentMessagesState
-    val cdc = ChatDesignerChatVM()
-    cdc.sessionId = slackChannel.id
-    val currentState by cdc.messagesState.collectAsState()
+    val currentState = it.currentMessagesState
+//    val cdc = ChatDesignerChatVM()
+//    cdc.sessionId = slackChannel.id
+//    val currentState by cdc.messagesState.collectAsState()
 
     MotionLayout(
       start = chatConstrains(),
